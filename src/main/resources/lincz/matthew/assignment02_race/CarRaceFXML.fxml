@@ -10,7 +10,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lincz.matthew.assignment02_race.CarRaceController">
    <bottom>
       <HBox prefHeight="114.0" prefWidth="586.0" BorderPane.alignment="CENTER">
@@ -19,9 +18,9 @@
                <children>
                   <HBox prefHeight="63.0" prefWidth="278.0" spacing="7.0">
                      <children>
-                        <Button mnemonicParsing="false" text="Start" />
-                        <Button mnemonicParsing="false" text="Pause" />
-                        <Button mnemonicParsing="false" text="Reset" />
+                        <Button fx:id="startBtn" mnemonicParsing="false" onAction="#start" text="Start" />
+                        <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#pause" text="Pause" />
+                        <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" text="Reset" />
                      </children>
                      <opaqueInsets>
                         <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
@@ -40,8 +39,8 @@
                               <Font size="10.0" />
                            </font>
                         </Label>
-                        <Slider blockIncrement="0.25" majorTickUnit="2.5" max="5.0" maxWidth="160.0" minorTickCount="2" prefWidth="160.0" showTickMarks="true" value="2.5" />
-                        <Label style="-fx-font-weight: bold;" text="1.0x" />
+                        <Slider fx:id="sliderSpeed" blockIncrement="0.25" majorTickUnit="2.5" max="5.0" maxWidth="160.0" minorTickCount="2" onDragDetected="#speed" prefWidth="160.0" showTickMarks="true" value="2.5" />
+                        <Label fx:id="multiplierSpeed" style="-fx-font-weight: bold;" text="1.0x" />
                      </children>
                   </HBox>
                </children>
