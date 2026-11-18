@@ -1,49 +1,46 @@
 package lincz.matthew.assignment02_race;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
-
-import javafx.fxml.FXML;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class CarRaceController {
 
     @FXML
-    private Label multiplierSpeed;
+    private Label finalResultsListLabel;
 
     @FXML
-    private Button pauseBtn;
+    private Label messageLabel;
 
     @FXML
-    private Button resetBtn;
+    private Button pauseButton;
 
     @FXML
-    private Slider sliderSpeed;
+    private Pane raceTrackPane;
 
     @FXML
-    private Button startBtn;
+    private Button resetButton;
 
     @FXML
-    void pause(ActionEvent event) {
-
-    }
+    private AnchorPane rootPane;
 
     @FXML
-    void reset(ActionEvent event) {
-
-    }
+    private Label slideshowGreetingLabel;
 
     @FXML
-    void speed(MouseEvent event) {
-
-    }
+    private ImageView slideshowImageView;
 
     @FXML
-    void start(ActionEvent event) {
+    private Pane slideshowPane;
 
-    }
+    @FXML
+    private Slider speedSlider;
+
+    @FXML
+    private Button startButton;
 
 }

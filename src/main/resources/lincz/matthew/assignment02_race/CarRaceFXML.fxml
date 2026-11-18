@@ -1,66 +1,96 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lincz.matthew.assignment02_race.CarRaceController">
-   <bottom>
-      <HBox prefHeight="114.0" prefWidth="586.0" BorderPane.alignment="CENTER">
+<AnchorPane fx:id="rootPane" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: orange;" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lincz.matthew.assignment02_race.CarRaceController">
+   <children>
+      <Label layoutX="14.5" layoutY="10.0" text="🚗 Traffic Simulation" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+      </Label>
+
+      <Pane fx:id="raceTrackPane" layoutX="14.5" layoutY="40.0" prefHeight="350.0" prefWidth="871.0" style="-fx-background-color: #333333;">
          <children>
-            <VBox prefHeight="105.0" prefWidth="301.0" style="-fx-border-color: BLACK;">
+            <Line endX="800.0" layoutY="116.0" startX="70.0" stroke="#7f8c8d" strokeDashArray="10.0" strokeWidth="2.0" />
+            <Line endX="800.0" layoutY="192.0" startX="70.0" stroke="#7f8c8d" strokeDashArray="10.0" strokeWidth="2.0" />
+            <Line endX="800.0" layoutY="268.0" startX="70.0" stroke="#7f8c8d" strokeDashArray="10.0" strokeWidth="2.0" />
+
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="green" height="350.0" stroke="BLACK" width="50.0" />
+            <Label layoutX="16.0" layoutY="50.0" style="-fx-font-weight: bold;" text="S&#10;T&#10;A&#10;R&#10;T&#10;I&#10;N&#10;G">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="red" height="350.0" layoutX="821.0" stroke="BLACK" width="50.0" />
+            <Label layoutX="838.0" layoutY="50.0" style="-fx-font-weight: bold;" text="A&#10;R&#10;R&#10;I&#10;V&#10;A&#10;L">
+               <font>
+                  <Font size="24.0" />
+               </font></Label>
+
+            <Pane fx:id="slideshowPane" prefHeight="350.0" prefWidth="871.0" style="-fx-background-color: rgba(44, 62, 80, 0.92);">
                <children>
-                  <HBox prefHeight="63.0" prefWidth="278.0" spacing="7.0">
-                     <children>
-                        <Button fx:id="startBtn" mnemonicParsing="false" onAction="#start" text="Start" />
-                        <Button fx:id="pauseBtn" mnemonicParsing="false" onAction="#pause" text="Pause" />
-                        <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#reset" text="Reset" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-                     </opaqueInsets>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                     <padding>
-                        <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-                     </padding>
-                  </HBox>
-                  <HBox prefHeight="58.0" prefWidth="307.0">
-                     <children>
-                        <Label style="-fx-font-weight: Bold;" text="Simulation Speed:">
-                           <font>
-                              <Font size="10.0" />
-                           </font>
-                        </Label>
-                        <Slider fx:id="sliderSpeed" blockIncrement="0.25" majorTickUnit="2.5" max="5.0" maxWidth="160.0" minorTickCount="2" onDragDetected="#speed" prefWidth="160.0" showTickMarks="true" value="2.5" />
-                        <Label fx:id="multiplierSpeed" style="-fx-font-weight: bold;" text="1.0x" />
-                     </children>
-                  </HBox>
+                  <ImageView fx:id="slideshowImageView" fitHeight="200.0" fitWidth="300.0" layoutX="285.0" layoutY="35.0" preserveRatio="true" />
+                  <Label fx:id="slideshowGreetingLabel" alignment="CENTER" layoutX="135.0" layoutY="250.0" prefHeight="60.0" prefWidth="600.0" text="Welcome!" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
                </children>
-            </VBox>
+            </Pane>
          </children>
-         <padding>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </padding>
+      </Pane>
+
+      <HBox layoutX="14.5" layoutY="405.0" prefHeight="180.0" prefWidth="871.0" spacing="15.0">
+         <children>
+            <Pane prefHeight="180.0" prefWidth="420.0" style="-fx-background-radius: 5; -fx-padding: 10;">
+               <children>
+                  <HBox layoutX="15.0" layoutY="20.0" spacing="12.0">
+                     <children>
+                        <Button fx:id="startButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" style="-fx-background-color: green; -fx-font-weight: bold;" text="▶ Start" />
+                        <Button fx:id="pauseButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" style="-fx-background-color: cyan; -fx-font-weight: bold;" text="⏸ Pause" />
+                        <Button fx:id="resetButton" mnemonicParsing="false" prefHeight="40.0" prefWidth="115.0" style="-fx-background-color: red; -fx-font-weight: bold;" text="🔄 Reset" />
+                     </children>
+                  </HBox>
+                  <Label layoutX="15.0" layoutY="95.0" text="Simulation Speed:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Slider fx:id="speedSlider" layoutX="15.0" layoutY="125.0" prefWidth="320.0" />
+                  <Label layoutX="345.0" layoutY="121.0" text="1.0x" textFill="WHITE">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </Pane>
+
+            <Pane prefHeight="180.0" prefWidth="436.0" style="-fx-background-radius: 5;">
+               <children>
+                  <Label fx:id="messageLabel" layoutX="15.0" layoutY="15.0" prefHeight="45.0" prefWidth="400.0" text="Slideshow active... Click Start to begin race." textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="15.0" layoutY="65.0" text="Final Results:" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="finalResultsListLabel" alignment="TOP_LEFT" layoutX="15.0" layoutY="85.0" prefHeight="80.0" prefWidth="400.0" text="" textFill="#ecf0f1" />
+               </children>
+            </Pane>
+         </children>
       </HBox>
-   </bottom>
-   <padding>
-      <Insets bottom="7.0" left="7.0" right="7.0" top="7.0" />
-   </padding>
-   <left>
-      <Label prefHeight="190.0" prefWidth="39.0" style="-fx-background-color: GREEN; -fx-font-size: 16; -fx-font-weight: BOLD; -fx-text-fill: WHITE; -fx-padding: 13;" text="S&#10;T&#10;A&#10;R&#10;T" BorderPane.alignment="CENTER" />
-   </left>
-   <right>
-      <Label prefHeight="190.0" prefWidth="42.0" style="-fx-background-color: DARKRED; -fx-font-size: 15; -fx-text-fill: White; -fx-font-weight: Bold; -fx-padding: 12;" text="A&#10;R&#10;R&#10;I&#10;V&#10;A&#10;L" BorderPane.alignment="CENTER" />
-   </right>
-   <center>
-      <Pane maxHeight="190.0" prefHeight="150.0" prefWidth="505.0" style="-fx-background-color: #333333;" BorderPane.alignment="CENTER" />
-   </center>
-</BorderPane>
+   </children>
+</AnchorPane>
