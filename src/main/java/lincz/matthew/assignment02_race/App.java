@@ -1,3 +1,4 @@
+//https://github.com/Nullvigil/Assignment02_Race
 package lincz.matthew.assignment02_race;
 
 import javafx.application.Application;
@@ -9,7 +10,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 /**
- * JavaFX App
+ * JavaFX App 
+ * @Author Matthew Lincz
  */
 public class App extends Application {
 
