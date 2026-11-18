@@ -1,3 +1,4 @@
+//https://github.com/Nullvigil/Assignment02_Race
 package lincz.matthew.assignment02_race;
 
 import java.time.Duration;
@@ -15,7 +16,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Polygon;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
 
+/*
+ * @Author Matthew Lincz
+*/
 public class CarRaceController {
 @FXML private Pane rootPane;
     @FXML private Pane raceTrackPane;
@@ -41,9 +49,9 @@ public class CarRaceController {
 
     @FXML
     public void initialize() {
-        carModels = new ArrayList<>();
-        carNodes = new ArrayList<>();
-        finishingOrder = new ArrayList<>();
+        var carModels = new ArrayList<>();
+        var carNodes = new ArrayList<>();
+        var finishingOrder = new ArrayList<>(); //somehow forgot to add var???
 
         // Initialize 4 cars matching the original visual style and colors
         carModels.add(new CarRaceModel("Sedan", 23, 70, 65, 4.0, Color.web("#e67e22"))); //orange
@@ -51,11 +59,10 @@ public class CarRaceController {
         carModels.add(new CarRaceModel("Coupe", 78, 70, 215, 3.8, Color.web("#ab47bc"))); //purple
         carModels.add(new CarRaceModel("Muscle", 88, 70, 290, 4.3, Color.web("#2196f3"))); //blue
 
-        /*
-        // future methods
+       
         setupCarsOnTrack();
         setupSlideshow();
-        */
+        
         startButton.setOnAction(e -> startRace());
         pauseButton.setOnAction(e -> pauseRace());
         resetButton.setOnAction(e -> resetRace());
@@ -66,8 +73,7 @@ public class CarRaceController {
             speedSlider.setMin(0.5);
             speedSlider.setMax(2.5);
             speedSlider.setValue(1.0);
-            //speedslider function will be added later
-            //speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> updateSpeed(newVal.doubleValue()));
+            speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> updateSpeed(newVal.doubleValue()));
         }
     }
     
@@ -127,26 +133,96 @@ public class CarRaceController {
         }
   
     }
-    private void createJavaFXCar(CarRaceModel model) { //change to pane (return)
-        
+    /**
+     * This is the method for making the car body and parts as requested in instructions
+     * @param model
+     * @return 
+     */
+    private Pane createJavaFXCar(CarRaceModel model) { 
+        Pane pane = new Pane();
+
+        // Car Body Polygon
+        Polygon body = new Polygon(
+            10, 18,
+            30, 4,
+            70, 4,
+            90, 18,
+            98, 30,
+            2, 30
+        );
+        body.setFill(model.getColor());
+
+        // Car Roof Polygon
+        Polygon roof = new Polygon(
+            35, 4,
+            43, -10,
+            67, -10,
+            75, 4
+        );
+        roof.setFill(model.getColor().darker());
+
+        // Windows
+        var frontWindow = new Rectangle(48, -8, 14, 12);
+        frontWindow.setFill(Color.web("#b2ebf2"));
+        var rearWindow = new Rectangle(35, -8, 10, 12);
+        rearWindow.setFill(Color.web("#b2ebf2"));
+
+        // Wheels
+        var wheel1 = new Circle(18, 30, 8, Color.DARKGRAY);
+        wheel1.setStroke(Color.BLACK);
+        wheel1.setStrokeWidth(1.5);
+        var hub1 = new Circle(18, 30, 3, Color.WHITE);
+
+        var wheel2 = new Circle(82, 30, 8, Color.DARKGRAY);
+        wheel2.setStroke(Color.BLACK);
+        wheel2.setStrokeWidth(1.5);
+        var hub2 = new Circle(82, 30, 3, Color.WHITE);
+
+        // Car Number
+        Text numberText = new Text(String.valueOf(model.getCarNumber()));
+        numberText.setFill(Color.WHITE);
+        numberText.setStyle("-fx-font-weight: bold; -fx-font-size: 11px;");
+        numberText.setX(43);
+        numberText.setY(20);
+
+        pane.getChildren().addAll(body, roof, frontWindow, rearWindow, wheel1, wheel2, hub1, hub2, numberText);
+        return pane;
     }
+    /**
+     * This method will be the start function for the button called start
+     */
     @FXML
     private void startRace() {
         
     }
+    /**
+     * This method will be the pause function for the button called pause
+     */
     @FXML
     private void pauseRace() {
   
     }
-
+    /**
+     * This method will be the reset function for the button called reset
+     */
     @FXML
     private void resetRace() {
         
     }
+    /**
+     * This will be the simple method for updating the new speed when the slider
+     * is activated
+     * @param rate is the new multiplier of speed given by the slider
+     */
     private void updateSpeed(double rate) {
 
     }
 
+    /**
+     * handles the animation and change of all labels and results once a car reaches
+     * the end rectangle
+     * @param model is the car model that should have reached the end.
+     */
     private synchronized void handleCarFinished(CarRaceModel model) {
 
     }
