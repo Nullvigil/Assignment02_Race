@@ -15,9 +15,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.Group;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.ClosePath;
+import javafx.scene.shape.Ellipse;
+import javafx.scene.shape.Line;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.scene.shape.Polygon;
+import javafx.scene.shape.QuadCurveTo;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.StrokeLineJoin;
 import javafx.scene.text.Text;
 
 /*
@@ -34,6 +43,7 @@ public class CarRaceController {
     @FXML private Button pauseButton;
     @FXML private Button resetButton;
     @FXML private Slider speedSlider;
+    @FXML private Label speedValueLabel;
     @FXML private Label messageLabel;
     @FXML private Label finalResultsListLabel;
 
@@ -41,7 +51,7 @@ public class CarRaceController {
     private List<Pane> carNodes;
     private List<TranslateTransition> translateTransitions;
 
-    private Timeline slideshowTimeline;
+    private PauseTransition slideshowTimeline;
     private int currentSlideIndex = 0;
     private boolean raceFinished = false;
     private List<String> finishingOrder;
@@ -71,7 +81,11 @@ public class CarRaceController {
             speedSlider.setMin(0.5);
             speedSlider.setMax(2.5);
             speedSlider.setValue(1.0);
+            speedSlider.setShowTickMarks(true);
+            speedSlider.setMajorTickUnit(0.5);
+            speedSlider.setMinorTickCount(4);
             speedSlider.valueProperty().addListener((obs, oldVal, newVal) -> updateSpeed(newVal.doubleValue()));
+            updateSpeed(speedSlider.getValue());
         }
     }
     
@@ -92,6 +106,7 @@ public class CarRaceController {
             slideshowImageView.setImage(slideImages.get(0));
             
             PauseTransition pause = new PauseTransition(javafx.util.Duration.millis(2000));
+            slideshowTimeline = pause;
             pause.setOnFinished(event -> {
                 currentSlideIndex = (currentSlideIndex + 1) % slideImages.size();
                 slideshowImageView.setImage(slideImages.get(currentSlideIndex));
@@ -112,6 +127,8 @@ public class CarRaceController {
         translateTransitions.clear();
 
         for (CarRaceModel model : carModels) {
+            // New random speed between 3.9 and 5.1 every time the cars are set up (start and each reset)
+            model.setSpeed(3.9 + Math.random() * (5.1 - 3.9));
             Pane carGroup = createJavaFXCar(model);
             carGroup.setLayoutX(model.getXPosition());
             carGroup.setLayoutY(model.getYPosition());
@@ -124,6 +141,7 @@ public class CarRaceController {
             
             TranslateTransition tt = new TranslateTransition(javafx.util.Duration.millis(durationMillis), carGroup);
             tt.setToX(distance);
+            tt.setRate(speedSlider != null ? speedSlider.getValue() : 1.0);
             tt.setOnFinished(event -> handleCarFinished(model));
             translateTransitions.add(tt);
         }
@@ -138,54 +156,45 @@ public class CarRaceController {
      * @param model
      * @return 
      */
-    private Pane createJavaFXCar(CarRaceModel model) { 
+    private Pane createJavaFXCar(CarRaceModel model) {
         Pane pane = new Pane();
+        Color base = model.getColor();
 
-        // Car Body Polygon
-        Polygon body = new Polygon(
-            10, 18,
-            30, 4,
-            70, 4,
-            90, 18,
-            98, 30,
-            2, 30
-        );
-        body.setFill(model.getColor());
+        // Body: long rounded rectangle
+        Rectangle body = new Rectangle(0, 14, 100, 20);
+        body.setArcWidth(12);
+        body.setArcHeight(12);
+        body.setFill(base);
 
-        // Car Roof Polygon
-        Polygon roof = new Polygon(
-            35, 4,
-            43, -10,
-            67, -10,
-            75, 4
-        );
-        roof.setFill(model.getColor().darker());
+        // Cabin on top of the body
+        Polygon cabin = new Polygon(26, 14, 36, 0, 66, 0, 78, 14);
+        cabin.setFill(base.darker());
 
-        // Windows
-        Rectangle frontWindow = new Rectangle(48, -8, 14, 12);
-        frontWindow.setFill(Color.web("#b2ebf2"));
-        Rectangle rearWindow = new Rectangle(35, -8, 10, 12);
-        rearWindow.setFill(Color.web("#b2ebf2"));
+        // Two windows
+        Polygon rearWindow = new Polygon(31, 14, 38, 3, 48, 3, 48, 14);
+        Polygon frontWindow = new Polygon(52, 14, 52, 3, 64, 3, 72, 14);
+        rearWindow.setFill(Color.LIGHTBLUE);
+        frontWindow.setFill(Color.LIGHTBLUE);
+
+        // Headlight
+        Rectangle headlight = new Rectangle(94, 19, 6, 5);
+        headlight.setFill(Color.YELLOW);
 
         // Wheels
-        Circle wheel1 = new Circle(18, 30, 8, Color.DARKGRAY);
-        wheel1.setStroke(Color.BLACK);
-        wheel1.setStrokeWidth(1.5);
-        Circle hub1 = new Circle(18, 30, 3, Color.WHITE);
+        Circle wheel1 = new Circle(22, 34, 8, Color.BLACK);
+        Circle wheel2 = new Circle(78, 34, 8, Color.BLACK);
+        Circle hub1 = new Circle(22, 34, 3, Color.LIGHTGRAY);
+        Circle hub2 = new Circle(78, 34, 3, Color.LIGHTGRAY);
 
-        Circle wheel2 = new Circle(82, 30, 8, Color.DARKGRAY);
-        wheel2.setStroke(Color.BLACK);
-        wheel2.setStrokeWidth(1.5);
-        Circle hub2 = new Circle(82, 30, 3, Color.WHITE);
-
-        // Car Number
+        // Car number
         Text numberText = new Text(String.valueOf(model.getCarNumber()));
         numberText.setFill(Color.WHITE);
         numberText.setStyle("-fx-font-weight: bold; -fx-font-size: 11px;");
-        numberText.setX(43);
-        numberText.setY(20);
+        numberText.setX(44);
+        numberText.setY(29);
 
-        pane.getChildren().addAll(body, roof, frontWindow, rearWindow, wheel1, wheel2, hub1, hub2, numberText);
+        pane.getChildren().addAll(cabin, rearWindow, frontWindow, body, headlight,
+                wheel1, wheel2, hub1, hub2, numberText);
         return pane;
     }
 
@@ -256,7 +265,7 @@ public class CarRaceController {
         if (slideshowPane != null) {
             slideshowPane.setVisible(true);
             slideshowPane.setManaged(true);
-            if (slideshowTimeline != null) slideshowTimeline.play();
+            if (slideshowTimeline != null) slideshowTimeline.playFromStart();
         }
     }
 
@@ -264,6 +273,9 @@ public class CarRaceController {
      * This will be the simple method for updating the new speed when the slider is activated
      */
     private void updateSpeed(double rate) {
+        if (speedValueLabel != null) {
+            speedValueLabel.setText(String.format("%.1fx", rate));
+        }
         for (TranslateTransition tt : translateTransitions) {
             tt.setRate(rate);
         }

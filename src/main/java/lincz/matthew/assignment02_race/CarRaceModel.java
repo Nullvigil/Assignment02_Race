@@ -1,4 +1,4 @@
-//https://github.com/Nullvigil/Assignment02_Race
+
 package lincz.matthew.assignment02_race;
 
 /**
@@ -14,14 +14,17 @@ public class CarRaceModel {
     private double yPosition;
     private double speed;
     private Color color;
-
-    public CarRaceModel(String type, int carNumber, double xPosition, double yPosition, double speed, Color color) {
+    private String colorName;
+    
+    public CarRaceModel(String type, int carNumber, double xPosition, 
+            double yPosition, double speed, Color color, String colorName) {
         this.type = type;
         this.carNumber = carNumber;
         this.xPosition = xPosition;
         this.yPosition = yPosition;
         this.speed = speed;
         this.color = color;
+        this.colorName = colorName;
     }
 
     public String getType() {
@@ -71,5 +74,8 @@ public class CarRaceModel {
     public void setColor(Color color) {
         this.color = color;
     }
-       
+    
+    public String getColorName() { 
+        return colorName; 
+    } 
 }

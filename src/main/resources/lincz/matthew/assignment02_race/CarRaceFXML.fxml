@@ -66,8 +66,8 @@
                         <Font name="System Bold" size="13.0" />
                      </font>
                   </Label>
-                  <Slider fx:id="speedSlider" layoutX="15.0" layoutY="125.0" prefWidth="320.0" />
-                  <Label layoutX="345.0" layoutY="121.0" text="1.0x" textFill="WHITE">
+                  <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="15.0" layoutY="125.0" majorTickUnit="0.5" max="2.5" min="0.5" prefWidth="320.0" value="1.0" />
+                  <Label fx:id="speedValueLabel" layoutX="345.0" layoutY="121.0" text="1.0x" textFill="WHITE">
                      <font>
                         <Font size="12.0" />
                      </font>
